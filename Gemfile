@@ -12,8 +12,10 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'
 gem "dotenv-rails"
 gem 'devise', '~> 4.8'
+gem 'omniauth-rails_csrf_protection'
 gem 'omniauth', '~> 2.0', '>= 2.0.4'
 gem 'omniauth-google-oauth2', '~> 1.0'
+gem 'omniauth-facebook', '~> 9.0'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'pry', '~> 0.14.1'
 
