@@ -1,24 +1,40 @@
-# README
+# PBL_MATTHEW
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Setup
 
-Things you may want to cover:
+### Env variables
 
-* Ruby version
+If you don't have `.env` file then run
 
-* System dependencies
+```
+cp .env.sample .env
+```
 
-* Configuration
+and set your env variables if any.
 
-* Database creation
+### Build and start Docker containers
 
-* Database initialization
+Run
 
-* How to run the test suite
+```
+docker-compose build
+docker-compose up
+docker-compose run web rails db:create
+docker-compose run web rails db:migrate
+docker-compose restart web
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+## Start server
 
-* Deployment instructions
+Run
 
-* ...
+```
+docker-compose up
+```
+
+If you don't want to enable pgadmin run:
+```
+docker-compose up web
+```
+
+then access `http://localhost:3000`.
