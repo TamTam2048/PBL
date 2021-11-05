@@ -56,9 +56,9 @@ ActiveRecord::Schema.define(version: 2021_11_05_021020) do
   create_table "line_items", charset: "utf8", force: :cascade do |t|
     t.bigint "product_id"
     t.bigint "order_id"
-    t.decimal "unit_price", precision: 12, scale: 2
     t.integer "quantity"
-    t.decimal "total_price", precision: 12, scale: 2
+    t.decimal "unit_price", precision: 12, scale: 2, null: false
+    t.decimal "total_price", precision: 12, scale: 2, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["order_id"], name: "index_line_items_on_order_id"
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 2021_11_05_021020) do
     t.text "description"
     t.decimal "price", precision: 8, scale: 2, default: "1.0", null: false
     t.decimal "rating", precision: 2, scale: 1, default: "5.0", null: false
+    t.integer "rating_count", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_products_on_user_id"

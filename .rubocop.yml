@@ -1,0 +1,44 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-thread_safety
+
+inherit_from:
+  - .rubocop_enabled.yml
+  - .rubocop_disabled.yml
+
+# Common configuration.
+AllCops:
+  Include:
+    - '**/*.rb'
+    - '**/*.rake'
+    - Gemfile
+  Exclude:
+    - bin/**/*
+    - db/**/*
+    - node_modules/**/*
+    - vendor/**/*
+  NewCops: enable
+
+# Ruby cops
+Layout/LineLength:
+  Max: 120
+  Exclude:
+    - config/**/*
+
+Metrics/BlockLength:
+  Exclude:
+    - config/**/*
+    - spec/**/*
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+# Rails cops
+Rails/UnknownEnv:
+  Environments:
+    - development
+    - heroku
+    - production
+    - staging
+    - test
