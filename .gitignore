@@ -38,7 +38,7 @@ yarn-debug.log*
 # IDE
 /.idea/*
 /.vs/*
-
+/db_data/*
 .DS_Store
 
 .env
