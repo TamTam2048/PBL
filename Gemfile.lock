@@ -139,6 +139,7 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
+    mysql2 (0.5.3)
     nio4r (2.5.8)
     nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
@@ -312,6 +313,7 @@ DEPENDENCIES
   dotenv-rails
   jbuilder (~> 2.7)
   listen (~> 3.3)
+  mysql2 (~> 0.5.3)
   omniauth (~> 2.0, >= 2.0.4)
   omniauth-facebook (~> 9.0)
   omniauth-google-oauth2 (~> 1.0)
