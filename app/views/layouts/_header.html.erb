@@ -1,0 +1,78 @@
+<div class="relative bg-white">
+  <div class="max-w-10xl mx-auto ">
+    <div class="flex justify-between items-center border-b-2 border-gray-100 px-4 sm:px-8 py-4 md:justify-start md:space-x-10">
+      <div class="flex justify-start lg:w-0 lg:flex-1">
+        <%= link_to root_url do %>
+          <span class="sr-only">Workflow</span>
+<!--          <img class="h-8 w-auto sm:h-10" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="">-->
+          <span class="h-8 w-auto sm:h-10">Home</span>
+        <% end %>
+      </div>
+      <div class="-mr-2 -my-2 md:hidden">
+        <button type="button" class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-expanded="false">
+          <span class="sr-only">Open menu</span>
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+      <!-- search bar -->
+      <nav class="hidden md:flex space-x-10 w-96">
+        <%= form_tag products_path, method: :get, class: "relative mx-auto w-full text-gray-600" do %>
+          <%= text_field_tag :filter_by_name, params[:filter_by_name], class: "border w-full border-gray-300 bg-white h-10 pl-5 pr-16 rounded-lg text-sm focus:outline-none", placeholder: "Search product"%>
+          <%= button_tag(type: "submit", class: "absolute right-0 top-0 mt-3 mr-4") do %>
+            <svg class="text-gray-600 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
+                 xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"
+                 viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve"
+                 width="512px" height="512px">
+              <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
+            </svg>
+          <% end %>
+        <% end %>
+      </nav>
+      <!-- trailing items -->
+      <div class="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+        <!-- Cart -->
+        <%# if user_signed_in? %>
+          <%#= link_to checkouts_path, {class: "px-1 relative border-2 border-transparent text-gray-800 rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out"}, method: :get do %>
+<!--            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
+<!--              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />-->
+<!--            </svg>-->
+          <%# end %>
+          <%#= link_to cart_path, {class: "px-1 relative border-2 border-transparent text-gray-800 rounded-full hover:text-gray-400 focus:outline-none focus:text-gray-500 transition duration-150 ease-in-out"}, method: :get do %>
+<!--            <svg class="h-6 w-6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">-->
+<!--              <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>-->
+<!--            </svg>-->
+<!--            <span id="cart-text" class="absolute inset-0 object-right-top -mr-6 -top-3">-->
+            <%#= render 'layouts/cart_text' %>
+<!--          </span>-->
+          <%# end %>
+        <%# end %>
+        <!-- Authentication -->
+        <div class="relative inline-block ml-6">
+          <% if user_signed_in? %>
+            <div>
+              <button type="button" onclick="handleDisplayProfileDropdown()" class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                <%= current_user.name %>
+                <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </div>
+            <div id="profile-dropdown" class="origin-top-right absolute right-0 z-10 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" style="display: none">
+              <div class="z-10 py-1" role="none">
+                <%#= link_to "Profile", edit_user_registration_path, class: "text-gray-700 block px-4 py-2 text-sm hover:bg-indigo-500 hover:text-white", role: "menuitem", tabindex: "-1", id: "menu-item-0" %>
+                <%= link_to "Profile", user_path(current_user), class: "text-gray-700 block px-4 py-2 text-sm hover:bg-indigo-500 hover:text-white", role: "menuitem", tabindex: "-1", id: "menu-item-0" %>
+                <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "text-gray-700 block px-4 py-2 text-sm hover:bg-indigo-500 hover:text-white", role: "menuitem", id: "menu-item-1" %>
+              </div>
+            </div>
+          <% else %>
+            <%= link_to "Sign up", new_user_registration_path, class: "whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900 cursor-pointer" %>
+            <%= link_to "Login", new_user_session_path, class: "ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 cursor-pointer" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%= javascript_pack_tag 'header', 'data-turbolinks-track': 'reload' %>

@@ -1,0 +1,52 @@
+<div class="text-gray-700 body-font overflow-hidden bg-white">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="lg:w-4/5 mx-auto flex flex-wrap">
+      <% if @product.image.attached? %>
+        <div class="flex lg:w-1/2 w-full object-cover object-center rounded border border-gray-200">
+          <%= image_tag @product.image, class: "w-full h-full m-auto"%>
+        </div>
+      <% else %>
+        <div class="flex lg:w-1/2 w-full object-cover object-center rounded border border-gray-200">
+          <img class="w-full h-full m-auto" src="https://image.flaticon.com/icons/png/512/3075/3075929.png"/>
+        </div>
+      <% end %>
+      <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+        <h1 class="text-gray-900 text-3xl title-font font-medium mb-2"><%= @product.name %></h1>
+        <div class="flex mb-4">
+          <span class="flex items-center">
+            <% @product.rating.to_i.times do %>
+              <%= image_tag "star-on.svg", class: "w-6 h-6" %>
+            <% end %>
+            <% @product.blank_stars.times do %>
+              <%= image_tag "star-off.svg", class: "w-6 h-6" %>
+            <% end %>
+            <span class="text-gray-600 ml-3"><%= @product.reviews.count %> Reviews</span>
+          </span>
+        </div>
+        <p class="leading-relaxed"><%= @product.description %></p>
+        <%#= form_for @line_item, remote: true, html: {id: "add-to-cart-form"} do |form| %>
+          <%#= hidden_field_tag(food_id: @food.id) %>
+          <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
+            <div class="flex items-center">
+              <span class="bold-800 mr-3">Quantity</span>
+              <div class="relative">
+                <%#= form.number_field :quantity, { class: "rounded border appearance-none border-gray-400 w-20 py-2 focus:outline-none focus:border-indigo-500 text-base pl-3 pr-1", min: 1, value: 1} %>
+                <input type="number" class="rounded border appearance-none border-gray-400 w-20 py-2 focus:outline-none focus:border-indigo-500 text-base pl-3 pr-1" />
+              </div>
+            </div>
+          </div>
+          <div class="flex">
+            <span class="title-font font-medium text-2xl text-gray-900">$<%= @product.price %></span>
+            <%#= form.submit "Add to cart", class: "flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 cursor-pointer focus:outline-none hover:bg-indigo-600 rounded" %>
+          </div>
+        <%# end %>
+      </div>
+    </div>
+<!--    <div id="comment-form" class="lg:w-4/5 mx-auto rounded-lg pt-6">-->
+      <%#= render 'foods/comment_form' %>
+<!--    </div>-->
+<!--    <div id="comment-section" class="flex flex-col lg:w-4/5 mx-auto pt-6">-->
+      <%#= render 'foods/comment_section' %>
+<!--    </div>-->
+  </div>
+</div>

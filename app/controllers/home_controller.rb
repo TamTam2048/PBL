@@ -3,5 +3,7 @@
 class HomeController < ApplicationController
   before_action :authenticate_user!
 
-  def index; end
+  def index
+    @products = Product.all
+  end
 end

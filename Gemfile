@@ -31,6 +31,7 @@ group :development, :test do
   gem "rubocop-rails", require: false
   gem "rubocop-rspec", require: false
   gem "rubocop-thread_safety", require: false
+  gem 'rails-controller-testing', '~> 1.0', '>= 1.0.5'
 end
 
 group :development do
