@@ -28,7 +28,7 @@ class ProductsController < ApplicationController
   def update
     @product.update(product_params)
     if @product.save
-      redirect_to product_path(@product)
+      redirect_to user_path(current_user)
     else
       redirect_to edit_product_path(@product)
     end
