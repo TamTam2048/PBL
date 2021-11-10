@@ -1,0 +1,70 @@
+<div class="flex flex-col w-full p-8 text-gray-800 bg-white shadow-lg pin-r pin-y md:w-4/5 lg:w-4/5">
+  <% if @line_items.size > 0 %>
+    <div class="flex-1">
+      <table class="w-full text-sm lg:text-base" cellspacing="0">
+        <thead>
+        <tr class="h-12 uppercase">
+          <th class="hidden md:table-cell"></th>
+          <th class="text-left">Product</th>
+          <th class="lg:text-right text-left pl-5 lg:pl-0">
+            <span class="hidden lg:inline">Quantity</span>
+          </th>
+          <th class="hidden text-right md:table-cell">Unit price</th>
+          <th class="text-right md:table-cell">Total price</th>
+          <th class="hidden md:table-cell"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @line_items.each_with_index do |line_item, index| %>
+          <%= form_for line_item, remote: true, html: {id: 'quantity-update-form'} do |form| %>
+            <tr class="border-b-2">
+              <td class="hidden p-4 w-40 md:table-cell">
+                <% if line_item.product.image.attached? %>
+                  <%= image_tag line_item.product.image, class: "object-cover object-center max-w-full max-h-full mx-auto" %>
+                <% else %>
+                  <img class="object-cover object-center max-w-full max-h-full mx-auto" src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80" alt="">
+                <% end %>
+              </td>
+              <td>
+                <p class="md:ml-6"><%= line_item.product.name %></p>
+              </td>
+              <td class="justify-center md:justify-end text-right">
+                <%= form.number_field :quantity, onchange: "$('#quantity-update-form').append($('#product-id').submit()", data: { remote: true, method: :patch, url: line_item_path(line_item)}, class: "rounded border appearance-none border-gray-400 h-10 w-20 focus:outline-none focus:border-indigo-500 text-base pl-3 pr-1", min: 1, value: line_item.quantity %>
+                <%= form.hidden_field :product_id, id: "product-id", value: line_item.product_id %>
+              </td>
+              <td class="hidden text-right md:table-cell">
+                <span class="text-sm lg:text-base font-medium">
+                  <%= number_to_currency(line_item.unit_price) %>
+                </span>
+              </td>
+              <td class="text-right">
+                <span class="text-sm lg:text-base font-medium">
+                  <%= number_to_currency(line_item.total_price) %>
+                </span>
+              </td>
+              <td class="pl-10">
+                <%= link_to line_item, data: { class: "cursor-pointer", method: :delete, remote: true, url: line_item_path(line_item) } do %>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    <button class="flex justify-center w-full px-10 py-3 mt-6 font-medium text-white uppercase bg-indigo-700 rounded-full shadow item-center hover:bg-indigo-700 focus:shadow-outline focus:outline-none">
+      <svg aria-hidden="true" data-prefix="far" data-icon="credit-card" class="w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M527.9 32H48.1C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48.1 48h479.8c26.6 0 48.1-21.5 48.1-48V80c0-26.5-21.5-48-48.1-48zM54.1 80h467.8c3.3 0 6 2.7 6 6v42H48.1V86c0-3.3 2.7-6 6-6zm467.8 352H54.1c-3.3 0-6-2.7-6-6V256h479.8v170c0 3.3-2.7 6-6 6zM192 332v40c0 6.6-5.4 12-12 12h-72c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h72c6.6 0 12 5.4 12 12zm192 0v40c0 6.6-5.4 12-12 12H236c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h136c6.6 0 12 5.4 12 12z"/></svg>
+      <span class="ml-2 mt-5px">Checkout</span>
+    </button>
+  <% else %>
+    <h2 class="text-center" > Your cart is empty </h2>
+    <%= link_to root_url do %>
+      <button class="justify-center w-full px-10 py-3 mt-6 font-medium text-white uppercase bg-indigo-700 rounded-full shadow item-center hover:bg-indigo-700 focus:shadow-outline focus:outline-none">
+        <span class="ml-2 mt-5px">Let's buy something</span>
+      </button>
+    <% end %>
+  <% end %>
+</div>

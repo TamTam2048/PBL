@@ -2,7 +2,8 @@
 
 class Product < ApplicationRecord
   belongs_to :user
-  has_many :reviews
+  has_many :reviews, dependent: :destroy
+  has_many :line_items, dependent: :destroy
   has_one_attached :image
 
   validates :name, presence: true
