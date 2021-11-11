@@ -24,7 +24,6 @@ class ApplicationController < ActionController::Base
 
   def order_for_current_user
     if current_user.orders.exists?(user_id: current_user.id)
-      # Order.where(user_id: current_user.id).last
       current_user.orders.last
     else
       current_user.orders.build
