@@ -18,7 +18,7 @@ Run
 
 ```
 docker-compose build
-docker-compose up
+docker-compose run web yarn install
 docker-compose run web rails db:create
 docker-compose run web rails db:migrate
 docker-compose restart web
@@ -30,11 +30,6 @@ Run
 
 ```
 docker-compose up
-```
-
-If you don't want to enable pgadmin run:
-```
-docker-compose up web
 ```
 
 then access `http://localhost:3000`.
