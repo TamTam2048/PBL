@@ -8,7 +8,6 @@ class Checkout < ApplicationRecord
 
   VALID_EMAIL_REGEX = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
-  validates :slug, presence: true
   validates :total, presence: true, numericality: { greater_than: 0 }
   validates :email, presence: true, length: { in: 5..100 }, format: { with: VALID_EMAIL_REGEX }
 
@@ -20,7 +19,7 @@ class Checkout < ApplicationRecord
 
   def set_slug
     loop do
-      self.slug = SecureRandom.Hex(10)
+      self.slug = SecureRandom.hex(10)
       break unless Checkout.exists?(slug: slug)
     end
   end

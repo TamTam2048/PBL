@@ -26,9 +26,7 @@ class CheckoutsController < ApplicationController
     return if @order.blank?
 
     @checkout.user_id = current_user.id if current_user
-    @checkout.build_order
-    # update_total
-    @checkout.total = @order.subtotal
+    update_total
     if @checkout.save
       finalize_checkout
     else
@@ -44,7 +42,7 @@ class CheckoutsController < ApplicationController
   end
 
   def update_total
-    @checkout.total = @order.subtotal
+    @checkout.total = @order.line_items.sum { |line_item| line_item.product.price * line_item.quantity }
   end
 
   def finalize_checkout
@@ -61,6 +59,6 @@ class CheckoutsController < ApplicationController
   end
 
   def checkout_params
-    params.require(:checkout).permit(:name, :email, :address, :phone_number, :order_id, :user_id)
+    params.require(:checkout).permit(:name, :email, :address, :phone_number, :order_id)
   end
 end
