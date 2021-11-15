@@ -11,7 +11,7 @@ class Order < ApplicationRecord
   before_save :update_subtotal
 
   def subtotal
-    line_items.sum { |li| li.valid? ? (li.quantity * li.unit_price) : 0 }
+    line_items.sum { |li| li.valid? ? (li.product.price * li.quantity) : 0 }
   end
 
   private

@@ -8,12 +8,6 @@ class LineItem < ApplicationRecord
   validate :product_present
   validate :order_present
 
-  before_save :finalize
-
-  def unit_price
-    product.price
-  end
-
   private
 
   def product_present
@@ -22,10 +16,5 @@ class LineItem < ApplicationRecord
 
   def order_present
     errors.add(:order, "is not valid") if order.nil?
-  end
-
-  def finalize
-    self[:unit_price] = unit_price
-    self[:total_price] = self[:unit_price] * quantity
   end
 end

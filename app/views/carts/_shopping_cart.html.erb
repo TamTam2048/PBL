@@ -34,12 +34,12 @@
               </td>
               <td class="hidden text-right md:table-cell">
                 <span class="text-sm lg:text-base font-medium">
-                  <%= number_to_currency(line_item.unit_price) %>
+                  <%= number_to_currency(line_item.product.price) %>
                 </span>
               </td>
               <td class="text-right">
                 <span class="text-sm lg:text-base font-medium">
-                  <%= number_to_currency(line_item.total_price) %>
+                  <%= number_to_currency(line_item.product.price * line_item.quantity) %>
                 </span>
               </td>
               <td class="pl-10">
