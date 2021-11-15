@@ -56,8 +56,8 @@
   <div x-show="activeTab===1" class="flex flex-col w-full mx-auto px-4 sm:px-6 pt-5">
   </div>
   <div x-show="activeTab===2" id="product-table" class="flex flex-col w-full mx-auto px-4 sm:px-6 pt-5">
-    <%= link_to new_product_path do %>
-      <button class="flex float-right p-2 mb-6  rounded-md bg-indigo-600 text-white">
+    <%= link_to new_product_path, class: "p-2 mb-6 w-40 rounded-md bg-indigo-600 text-white" do %>
+      <button class="flex">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
