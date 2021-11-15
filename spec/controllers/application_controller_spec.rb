@@ -17,8 +17,8 @@ RSpec.describe ApplicationController, type: :controller do
 
     describe "current user not present" do
       it "returns new order" do
-        order = FactoryBot.build(:order, user: user)
-        expect(order).to be_present
+        current_order = FactoryBot.build(:order)
+        expect(current_order).to be_present
       end
     end
   end
