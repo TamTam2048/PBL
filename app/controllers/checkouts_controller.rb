@@ -28,6 +28,7 @@ class CheckoutsController < ApplicationController
     @checkout.user_id = current_user.id if current_user
     update_total
     if @checkout.save
+      finalize_order
       finalize_checkout
     else
       redirect_to new_checkout_path(order_id: @order.id)
@@ -45,8 +46,14 @@ class CheckoutsController < ApplicationController
     @checkout.total = @order.line_items.sum { |line_item| line_item.product.price * line_item.quantity }
   end
 
-  def finalize_checkout
+  def finalize_order
     @order.update(checkout_id: @checkout.id)
+    @order.line_items.each do |line_item|
+      line_item.update(unit_price: line_item.product.price, total_price: line_item.product.price * line_item.quantity)
+    end
+  end
+
+  def finalize_checkout
     session.delete(:order_id)
     session[:checkout_id] = @checkout.id
     order = current_user ? current_user.orders.build : Order.new
