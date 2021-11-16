@@ -29,7 +29,6 @@ RSpec.describe CheckoutsController, type: :controller do
   end
 
   describe "GET #show" do
-
     it "returns a success response" do
       checkout = FactoryBot.create(:checkout, user: user)
       FactoryBot.create(:order, user: user, checkout: checkout)

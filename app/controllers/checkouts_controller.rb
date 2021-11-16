@@ -25,6 +25,7 @@ class CheckoutsController < ApplicationController
   def create
     @checkout = Checkout.new(checkout_params)
     return if @order.blank?
+
     @checkout.user_id = current_user.id if current_user
     update_total
     if @checkout.save
