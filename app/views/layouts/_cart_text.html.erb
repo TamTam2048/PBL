@@ -1,0 +1,5 @@
+<div class="inline-flex items-center ml-4 px-1.5 py-0.5 border-2 border-white rounded-full text-xs font-semibold leading-4 bg-red-500">
+  <% if current_order %>
+    <h6 class="text-white"><%= current_order.line_items.size > 0 ? current_order.line_items.size : 0 %></h6>
+  <% end %>
+</div>

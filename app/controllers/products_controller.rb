@@ -5,13 +5,17 @@ class ProductsController < ApplicationController
   before_action :valid_user,  only: %i[edit update destroy]
 
   def index
-    @products = Product.all.with_attached_image
+    @products = Product.all
+    @line_item = current_order.line_items.new
   end
 
-  def show; end
+  def show
+    @line_item = current_order.line_items.new
+  end
 
   def new
     @product = Product.new
+    @line_item = current_order.line_items.new
   end
 
   def create
@@ -51,6 +55,6 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:name, :price, :description, :image)
+    params.require(:product).permit(:name, :price, :description, :image, :rating)
   end
 end

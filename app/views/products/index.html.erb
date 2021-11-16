@@ -1,16 +1,5 @@
 <div class="flex">
-<!--  <div class="w-1/5 bg-red py-20">-->
-    <%#= render "home/filter" %>
-<!--  </div>-->
   <div class="container px-5 py-20 mx-auto">
-    <%# if params[:filter_by_name].present? || params[:filter_by_rating].present? || params[:price_start].present? %>
-<!--      <div class="flex flex-wrap w-full mb-8">-->
-<!--        <div class="w-full mb-6 lg:mb-0">-->
-<!--          <h1 class="sm:text-4xl text-5xl font-bold font-medium title-font mb-2 text-gray-900">Found:&nbsp;<%#= @products.size %> results</h1>-->
-<!--          <div class="h-1 w-20 bg-indigo-500 rounded"></div>-->
-<!--        </div>-->
-<!--      </div>-->
-    <%# end %>
     <div class="grid gap-14 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
       <%= render 'products/product_list' %>
     </div>

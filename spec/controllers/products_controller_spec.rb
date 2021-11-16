@@ -3,7 +3,6 @@
 require "rails_helper"
 
 RSpec.describe ProductsController, type: :controller do
-
   login
 
   let(:valid_attributes) do
@@ -49,7 +48,6 @@ RSpec.describe ProductsController, type: :controller do
     end
   end
 
-
   describe "PATCH #update" do
     let(:user) { controller.current_user }
     let!(:product) { FactoryBot.create(:product, user: user) }
@@ -59,7 +57,7 @@ RSpec.describe ProductsController, type: :controller do
       expect(response).to redirect_to(product_path(product))
     end
 
-    it "redirects to edit_product_path with invalid attributes" do ||
+    it "redirects to edit_product_path with invalid attributes" do
       patch :update, params: { product: invalid_attributes, id: product.id }
       expect(response).to redirect_to(edit_product_path(product))
     end

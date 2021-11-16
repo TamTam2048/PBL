@@ -9,13 +9,33 @@ class User < ApplicationRecord
   has_many :checkouts, dependent: :destroy
   has_many :reviews, dependent: :destroy
 
-  def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email
-      user.password = Devise.friendly_token[0, 20]
-      user.image = auth.info.image
-      user.provider = auth.provider
-      user.name = auth.info.name
+  class << self
+    def from_omniauth(auth)
+      if omniauth_registered_user(auth)
+        omniauth_registered_user(auth)
+      elsif registered_user(auth)
+        registered_user(auth)
+      else
+        create_omniauth_user(auth)
+      end
+    end
+
+    def omniauth_registered_user(auth)
+      where(provider: auth.provider, uid: auth.uid).first
+    end
+
+    def registered_user(auth)
+      where(email: auth.info.email).first
+    end
+
+    def create_omniauth_user(auth)
+      create(
+        email: auth.info.email,
+        password: Devise.friendly_token[0, 20],
+        image: auth.info.image,
+        provider: auth.provider,
+        name: auth.info.name
+      )
     end
   end
 end

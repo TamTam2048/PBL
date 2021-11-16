@@ -1,12 +1,12 @@
 <% @products.each_with_index do |item, index| %>
-  <%#= form_for @line_item, remote: true do |form| %>
+  <%= form_for @line_item, remote: true do |form| %>
     <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden cursor-pointer">
       <a class="block relative h-40 rounded overflow-hidden">
         <% if item.image.attached? %>
           <%= image_tag item.image, class: "object-cover object-center max-w-full max-h-full mx-auto" %>
         <% else %>
-          <img alt="product-image" class="object-cover object-center max-w-full max-h-full mx-auto" src="https://image.flaticon.com/icons/png/512/3075/3075929.png">
-        <% end %>
+          <img class="object-cover object-center max-w-full max-h-full mx-auto" src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80" alt="">
+      <% end %>
       </a>
       <div class="px-5 py-3">
         <h2 class="text-gray-900 title-font text-lg font-medium"><%= item.name %></h2>
@@ -16,13 +16,12 @@
         </div>
         <p class="mt-1">$<%= item.price %></p>
         <div class="flex mt-2 justify-between">
-          <%#= form.number_field :quantity, value: 1, class: "hidden" %>
-          <%#= form.hidden_field :product_id, value: item.id %>
-          <%#= form.submit "Add to cart", class: "cursor-pointer w-full p-1 bg-indigo-600 text-white"  %>
-          <button class="cursor-pointer w-full p-1 bg-indigo-600 text-white">Add to cart</button>
+          <%= form.number_field :quantity, value: 1, class: "hidden" %>
+          <%= form.hidden_field :product_id, value: item.id %>
+          <%= form.submit "Add to cart", class: "cursor-pointer w-full p-1 bg-indigo-600 text-white"  %>
           <%= link_to "Detail", product_path(item.id), class: "w-full p-1 bg-gray-600 text-white text-center", method: :get %>
         </div>
       </div>
     </div>
-  <%# end %>
+  <% end %>
 <% end %>
