@@ -3,22 +3,21 @@
 require "rails_helper"
 
 RSpec.describe ApplicationController, type: :controller do
-  login
-  let(:user) { controller.current_user }
 
   describe "#current_order" do
     describe "current user present" do
+      login
+
       it "returns the latest order of current user" do
-        FactoryBot.create(:order, user: user)
-        current_order = user.orders.last
-        expect(current_order).to be_present
+        user = controller.current_user
+        order = FactoryBot.create(:order, user: user)
+        expect(controller.current_order).to eq(order)
       end
     end
 
     describe "current user not present" do
       it "returns new order" do
-        current_order = FactoryBot.build(:order)
-        expect(current_order).to be_present
+        expect(controller.current_order).to be_present
       end
     end
   end
