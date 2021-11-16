@@ -8,9 +8,13 @@
       <%= form.text_area :content, {class: "rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-400 focus:outline-none focus:bg-white", placeholder: "Write your comment", require: true } %>
     </div>
     <div class="w-full md:w-full flex items-start md:w-full px-3">
-      <div class="-mr-1">
-        <%= form.submit "Post", class: "cursor-pointer bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-indigo-400 hover:text-white" %>
-      </div>
+      <% if user_signed_in? %>
+        <div class="-mr-1">
+          <%= form.submit "Post", class: "cursor-pointer bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-indigo-400 hover:text-white" %>
+        </div>
+      <% else %>
+        <%= link_to "Please login to use this feature", new_user_session_path, class: "text-gray-700 underline" %>
+      <% end %>
     </div>
   </div>
 <% end %>

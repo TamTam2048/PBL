@@ -9,7 +9,7 @@
     </div>
     <div class="flex-1 border border-gray-400 rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
       <div class="mb-px">
-        <strong class="mr-2"><%= review.user.name %></strong><span class="text-xs text-gray-400">3:34 PM</span>
+        <strong class="mr-2"><%= review.user.name %></strong><span class="text-xs text-gray-400"><%= time_since(review.updated_at) %></span>
       </div>
       <div id="comment-rating-<%= index %>" class="flex flex-row h-4 w-4 mb-2"></div>
       <p class="text-sm">
