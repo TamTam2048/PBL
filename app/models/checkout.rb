@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Checkout < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, optional: true
   has_one :order, dependent: :destroy
 
   before_create :set_slug
