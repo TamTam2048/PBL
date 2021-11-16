@@ -5,11 +5,7 @@ class CheckoutsController < ApplicationController
   before_action :set_order_and_line_items, only: %i[new create]
 
   def index
-    if current_user
-      @checkouts = current_user.checkouts
-    else
-      redirect_to root_path
-    end
+    @checkouts = current_user.checkouts
   end
 
   def show
@@ -32,6 +28,7 @@ class CheckoutsController < ApplicationController
       finalize_checkout
     else
       redirect_to new_checkout_path(order_id: @order.id)
+      flash[:danger] = "An error occurred. Please try again"
     end
   end
 
@@ -59,6 +56,7 @@ class CheckoutsController < ApplicationController
     order = current_user ? current_user.orders.build : Order.new
     order.save
     redirect_to @checkout
+    flash[:success] = "Your order has been created successfully"
   end
 
   def set_checkout

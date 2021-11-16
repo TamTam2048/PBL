@@ -22,8 +22,10 @@ class ProductsController < ApplicationController
     @product = current_user.products.build(product_params)
     if @product.save
       redirect_to product_path(@product)
+      flash[:success] = "Created product successfully"
     else
       redirect_to new_product_path
+      flash[:danger] = "An error occurred. Please try again"
     end
   end
 
@@ -33,8 +35,10 @@ class ProductsController < ApplicationController
     @product.update(product_params)
     if @product.save
       redirect_to user_path(current_user)
+      flash[:success] = "Updated product successfully"
     else
       redirect_to edit_product_path(@product)
+      flash[:danger] = "An error occurred. Please try again"
     end
   end
 
@@ -42,6 +46,7 @@ class ProductsController < ApplicationController
     @product.image.purge if @product.image.attached?
     @product.destroy
     redirect_to request.referer || products_path
+    flash[:success] = "Deleted product successfully"
   end
 
   private
