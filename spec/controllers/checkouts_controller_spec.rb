@@ -6,6 +6,9 @@ RSpec.describe CheckoutsController, type: :controller do
   login
 
   let(:user) { controller.current_user }
+  let(:seller) { FactoryBot.create(:user) }
+  let(:product) { FactoryBot.create(:product, user: seller) }
+
   let(:valid_attributes) do
     { name: user.name, email: user.email, address: "", phone_number: "" }
   end
@@ -45,9 +48,8 @@ RSpec.describe CheckoutsController, type: :controller do
 
   describe "POST #create" do
     it "creates checkout" do
-      order = FactoryBot.create(:order, user: user)
-      # post :create, params: { checkout: valid_attributes, order_id: order.id }
-
+      order = FactoryBot.create(:order, user: user, checkout: nil)
+      FactoryBot.create(:line_item, order: order, product: product)
       expect do
         post :create, params: { checkout: valid_attributes, order_id: order.id }
       end.to change(Checkout, :count).by(1)
