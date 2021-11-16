@@ -23,8 +23,7 @@ RSpec.describe ProductsController, type: :controller do
 
   describe "GET #show" do
     it "returns a success response" do
-      product = FactoryBot.create(:product)
-      get :show, params: { id: product.id }
+      FactoryBot.create(:product)
       expect(response).to have_http_status(:ok)
     end
   end
@@ -54,7 +53,7 @@ RSpec.describe ProductsController, type: :controller do
 
     it "updates product with valid attributes" do
       patch :update, params: { product: valid_attributes, id: product.id }
-      expect(response).to redirect_to(product_path(product))
+      expect(response).to redirect_to(user_path(user))
     end
 
     it "redirects to edit_product_path with invalid attributes" do
