@@ -5,7 +5,12 @@ class CheckoutsController < ApplicationController
   before_action :set_order_and_line_items, only: %i[new create]
 
   def index
-    @checkouts = current_user.checkouts
+    if current_user
+      @checkouts = current_user.checkouts
+    else
+      redirect_to root_path
+      flash[:notice] = "Please login before you proceed"
+    end
   end
 
   def show
