@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   resources :products
   resources :orders, only: %i[create update destroy]
   resources :line_items, only: %i[create update destroy]
+  resources :checkouts, param: :slug
   resource  :cart, only: [:show]
 end

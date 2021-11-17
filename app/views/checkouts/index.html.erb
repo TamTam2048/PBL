@@ -1,0 +1,27 @@
+<% @checkouts.each do |checkout| %>
+  <%= link_to checkout_path(checkout) do %>
+    <div class="cursor-pointer container m-auto flex flex-col max-w-4xl mt-6 p-4 shadow">
+      <div class="flex justify-between">
+        <span class="p-2">Order Id: <%= checkout.slug %></span>
+        <% case checkout.order.status when 'pending' %>
+          <div class="rounded text-blue-400 my-auto">
+            <span class="p-6"><%= checkout.order.status %></span>
+          </div>
+        <% when 'processing' %>
+          <div class="rounded text-indigo-600 my-auto">
+            <span class="p-6"><%= checkout.order.status %></span>
+          </div>
+        <% when 'approved' %>
+          <div class="rounded text-green-600 my-auto">
+            <span class="p-6"><%= checkout.order.status %></span>
+          </div>
+        <% when 'canceled' %>
+          <div class="rounded text-red-600 my-auto">
+            <span class="p-6"><%= checkout.order.status %></span>
+          </div>
+        <% end %>
+      </div>
+      <span class="p-2">Created at: <%= checkout.created_at %></span>
+    </div>
+  <% end %>
+<% end %>

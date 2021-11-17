@@ -1,0 +1,72 @@
+<div class="container p-8 shadow m-auto mt-6">
+  <div class="flex flex-row justify-between">
+    <h1>Order Confirmation #<%= @checkout.slug %></h1>
+    <span class="text-red"><%= @order.status %></span>
+  </div>
+  <%= hidden_field_tag @checkout.id %>
+  <div>
+    <h2>Order summary</h2>
+    <div class="py-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="align-middle inline-block min-w-full sm:px-6 lg:px-8">
+        <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+          <table id="checkout-table" class="min-w-full divide-y divide-gray-200">
+            <thead class="">
+            <tr>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Image
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Name
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Quantity
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Unit Price
+              </th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Total Price
+              </th>
+            </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+            <% @line_items.each_with_index do |line_item, index| %>
+              <tr>
+                <td class="px-6 py-2 whitespace-nowrap">
+                  <div class="flex items-center">
+                    <div class="flex-shrink-0 h-full w-20">
+                      <% if line_item.product.image.attached? %>
+                        <%= image_tag line_item.product.image, class: "h-full w-full" %>
+                      <% else %>
+                        <img class="object-cover object-center max-w-full max-h-full mx-auto" src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80" alt="">
+                      <% end %>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-2 whitespace-nowrap">
+                  <%= line_item.product.name %>
+                </td>
+                <td class="px-6 py-2 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">
+                    <%= line_item.quantity %>
+                  </div>
+                </td>
+                <td class="px-6 py-2 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">
+                    <%= line_item.unit_price %>
+                  </div>
+                </td>
+                <td class="px-6 py-2 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">
+                    <%= line_item.total_price %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
