@@ -4,18 +4,14 @@ class ReviewsController < ApplicationController
   before_action :set_product
   before_action :set_review, only: %i[edit update destroy]
 
-  def new
-    @review = Review.new
-  end
-
   def create
     @review = current_user.reviews.new(review_params)
-    @review.product_id = @product.id
     if @review.save
-      @product.update_product_rating
       @review = Review.new
+      flash[:success] = "Created comment successfully"
     else
       redirect_to product_path(@product)
+      flash[:danger] = "An error occurred. Please try again"
     end
   end
 
@@ -28,7 +24,7 @@ class ReviewsController < ApplicationController
       flash[:success] = "Your comment has been updated"
     else
       redirect_to edit_product_review_path(@product.id, @review.id)
-      flash[:success] = "An error occured. Please try again"
+      flash[:danger] = "An error occured. Please try again"
     end
   end
 
@@ -48,6 +44,6 @@ class ReviewsController < ApplicationController
   end
 
   def review_params
-    params.require(:review).permit(:content, :rating)
+    params.require(:review).permit(:content, :rating).merge(product_id: params[:product_id])
   end
 end
