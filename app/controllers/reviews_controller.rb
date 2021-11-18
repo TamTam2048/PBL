@@ -8,7 +8,6 @@ class ReviewsController < ApplicationController
     @review = current_user.reviews.new(review_params)
     if @review.save
       @review = Review.new
-      flash[:success] = "Created comment successfully"
     else
       redirect_to product_path(@product)
       flash[:danger] = "An error occurred. Please try again"
@@ -30,7 +29,6 @@ class ReviewsController < ApplicationController
 
   def destroy
     @review.destroy
-    flash[:success] = "Your comment has been deleted"
   end
 
   private

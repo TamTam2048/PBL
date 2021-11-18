@@ -1,3 +1,4 @@
 $("#comment-form").html("<%= escape_javascript(render 'products/comment_form') %>");
 $("#comment-section").html("<%= escape_javascript(render 'products/comment_section') %>");
 $("#comment-content").val("");
+toastr['success']('<%= j "Your comment has been deleted" %>');

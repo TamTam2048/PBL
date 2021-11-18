@@ -61,7 +61,7 @@ class CheckoutsController < ApplicationController
     order = current_user ? current_user.orders.build : Order.new
     order.save
     redirect_to @checkout
-    flash[:success] = "Your order has been created successfully"
+    flash.now[:success] = "Your order has been created successfully"
   end
 
   def set_checkout

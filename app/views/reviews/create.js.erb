@@ -1,2 +1,3 @@
 $("#comment-form").html("<%= escape_javascript(render 'products/comment_form') %>");
 $("#comment-section").html("<%= escape_javascript(render 'products/comment_section') %>");
+toastr['success']('<%= j "Created comment successfully" %>');
