@@ -15,6 +15,8 @@ Turbolinks.start()
 ActiveStorage.start()
 
 window.$ =window.jQuery = require("jquery")
+import "./jquery.raty"
+
 global.toastr = require("toastr")
 
 toastr.options = {

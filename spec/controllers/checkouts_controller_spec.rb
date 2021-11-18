@@ -5,26 +5,41 @@ require "rails_helper"
 RSpec.describe CheckoutsController, type: :controller do
   login
 
-  let(:user) { controller.current_user }
-  let(:seller) { FactoryBot.create(:user) }
+  let(:user)    { controller.current_user }
+  let(:seller)  { FactoryBot.create(:user) }
   let(:product) { FactoryBot.create(:product, user: seller) }
+  let(:order)   { FactoryBot.create(:order, user: user, checkout: nil) }
 
   let(:valid_attributes) do
-    { name: user.name, email: user.email, address: "", phone_number: "" }
+    { name: user.name, email: user.email, address: Faker::Address.full_address,
+      phone_number: Faker::PhoneNumber.phone_number }
   end
 
   describe "GET #index" do
-    before do
-      5.times do
-        checkout = FactoryBot.create(:checkout, user: user)
-        FactoryBot.create(:order, user: user, checkout: checkout)
+    describe "current user present" do
+      before do
+        5.times do
+          checkout = FactoryBot.create(:checkout, user: user)
+          FactoryBot.create(:order, user: user, checkout: checkout)
+        end
+      end
+
+      it "returns a list of checkouts" do
+        checkouts = Checkout.all
+        get :index, params: {}
+        expect(assigns(:checkouts)).to match_array(checkouts)
       end
     end
 
-    it "returns a list of checkouts" do
-      checkouts = Checkout.all
-      get :index, params: {}
-      expect(assigns(:checkouts)).to match_array(checkouts)
+    describe "current user not present" do
+      before do
+        sign_out user
+      end
+
+      it "redirects to root path" do
+        get :index, params: {}
+        expect(response).to redirect_to(root_path)
+      end
     end
   end
 
@@ -46,12 +61,45 @@ RSpec.describe CheckoutsController, type: :controller do
   end
 
   describe "POST #create" do
-    it "creates checkout" do
-      order = FactoryBot.create(:order, user: user, checkout: nil)
-      FactoryBot.create(:line_item, order: order, product: product)
-      expect do
-        post :create, params: { checkout: valid_attributes, order_id: order.id }
-      end.to change(Checkout, :count).by(1)
+    describe "with valid attributes" do
+      it "creates checkout" do
+        order = FactoryBot.create(:order, user: user, checkout: nil)
+        FactoryBot.create(:line_item, order: order, product: product)
+        expect do
+          post :create, params: { checkout: valid_attributes, order_id: order.id }
+        end.to change(Checkout, :count).by(1)
+      end
+    end
+
+    describe "with invalid attributes" do
+      before do
+        FactoryBot.create(:line_item, order: order, product: product)
+      end
+
+      it "not create checkout without user name" do
+        expect do
+          post :create, params: { checkout: FactoryBot.attributes_for(:checkout, name: nil), order_id: order.id }
+        end.to change(Checkout, :count).by(0)
+      end
+
+      it "not create checkout without email" do
+        expect do
+          post :create, params: { checkout: FactoryBot.attributes_for(:checkout, email: nil), order_id: order.id }
+        end.to change(Checkout, :count).by(0)
+      end
+
+      it "not create checkout without address" do
+        expect do
+          post :create, params: { checkout: FactoryBot.attributes_for(:checkout, address: nil), order_id: order.id }
+        end.to change(Checkout, :count).by(0)
+      end
+
+      it "not create checkout without phone number" do
+        expect do
+          post :create, params: { checkout: FactoryBot.attributes_for(:checkout, phone_number: nil),
+                                  order_id: order.id }
+        end.to change(Checkout, :count).by(0)
+      end
     end
   end
 end
