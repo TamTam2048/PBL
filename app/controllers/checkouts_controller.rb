@@ -53,16 +53,21 @@ class CheckoutsController < ApplicationController
     @order.line_items.each do |line_item|
       line_item.update(unit_price: line_item.product.price, total_price: line_item.product.price * line_item.quantity)
     end
+    generate_new_order
+  end
+
+  def generate_new_order
+    session.delete(:order_id)
+    order = current_user ? current_user.orders.build : Order.new
+    order.save
   end
 
   def finalize_checkout
-    session.delete(:order_id)
     session[:checkout_id] = @checkout.id
-    order = current_user ? current_user.orders.build : Order.new
-    order.save
+
     if @checkout.create_charge(params[:stripeToken])
       redirect_to @checkout
-      flash.now[:success] = "Your order has been created successfully"
+      flash[:success] = "Your order has been created successfully"
     else
       redirect_to "new"
     end

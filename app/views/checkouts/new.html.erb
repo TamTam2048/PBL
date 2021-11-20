@@ -1,4 +1,4 @@
-
+<script src="https://js.stripe.com/v3/" async></script>
 <%= form_for @checkout, html: {multipart: true, id: "payment-form"}, validate: true do |form| %>
   <div class="h-screen grid grid-cols-3">
     <div class="lg:col-span-2 col-span-3 bg-indigo-50 space-y-8 px-12">
@@ -13,7 +13,7 @@
         </div>
         <div class="text-sm tracking-wide text-gray-500 mt-4 sm:mt-0 sm:ml-4">
           Please complete your shipping and payment details below.<br/>
-          <span class="text-red-700">You this card info for testing purpose: 4242 4242 4242 4242 -  11/25 - 123 - 55000</span>
+          <span class="text-red-700">Use this card info for testing purpose: 4242 4242 4242 4242 -  11/25 - 123 - 55000</span>
         </div>
         <div class="absolute sm:relative sm:top-auto sm:right-auto ml-auto right-4 top-4 text-gray-400 hover:text-gray-800 cursor-pointer">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onclick="$('#banner').slideUp();">
@@ -89,7 +89,7 @@
       <div class="px-8 border-b pt-8">
         <div class="font-semibold text-xl flex justify-between py-4 text-gray-600 ">
           <span>Subtotal</span>
-          <span id="subtotal" class="font-semibold text-indigo-500"><%= @order.subtotal %></span>
+          <span id="subtotal" class="font-semibold text-indigo-500"><%= number_to_currency(@order.subtotal) %></span>
         </div>
         <div class="font-semibold text-xl flex justify-between py-4 text-gray-600">
           <span>Discount</span>
@@ -97,7 +97,7 @@
         </div>
         <div class="font-semibold text-xl flex justify-between py-4 text-gray-600">
           <span>Total</span>
-          <span id="total" class="font-semibold text-indigo-500"><%= @order.subtotal %></span>
+          <span id="total" class="font-semibold text-indigo-500"><%= number_to_currency(@order.subtotal) %></span>
         </div>
       </div>
     </div>
