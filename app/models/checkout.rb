@@ -25,7 +25,7 @@ class Checkout < ApplicationRecord
       source: token
     )
 
-    charge = Stripe::Charge.create(
+    Stripe::Charge.create(
       customer: customer.id,
       amount: trim(@amount),
       description: "user #{email} has started a purchase",

@@ -1,4 +1,18 @@
-document.addEventListener("turbolinks:load", function() {
+const initializeStripe = () => {
+
+    if(!window.Stripe) {
+        setTimeout(initializeStripe, 100);
+        console.log("reloading")
+        return;
+    }
+
+    console.log(window.Stripe);
+
+
+    if(!document.getElementById('card-element')) {
+        return;
+    }
+
     var stripe = Stripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
     var elements = stripe.elements({
@@ -14,8 +28,8 @@ document.addEventListener("turbolinks:load", function() {
     });
 
 
-// Custom styling can be passed to options when creating an Element.
-// (Note that this demo uses a wider set of styles than the guide below.)
+    // Custom styling can be passed to options when creating an Element.
+    // (Note that this demo uses a wider set of styles than the guide below.)
     var style = {
         base: {
             color: '#4B5563',
@@ -66,7 +80,7 @@ document.addEventListener("turbolinks:load", function() {
     });
 
 // Submit the form with the token ID.
-    function stripeTokenHandler(token) {
+    const stripeTokenHandler = (token) => {
         // Insert the token ID into the form so it gets submitted to the server
         var form = document.getElementById('payment-form');
         var hiddenInput = document.createElement('input');
@@ -78,4 +92,6 @@ document.addEventListener("turbolinks:load", function() {
         // Submit the form
         form.submit();
     }
-})
+}
+
+document.addEventListener("turbolinks:load", initializeStripe)
