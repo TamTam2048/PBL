@@ -2,12 +2,8 @@ const initializeStripe = () => {
 
     if(!window.Stripe) {
         setTimeout(initializeStripe, 100);
-        console.log("reloading")
         return;
     }
-
-    console.log(window.Stripe);
-
 
     if(!document.getElementById('card-element')) {
         return;
