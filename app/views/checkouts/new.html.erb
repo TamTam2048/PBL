@@ -52,7 +52,7 @@
         </fieldset>
       </div>
       <%= hidden_field_tag(:order_id, @order.id) %>
-      <%= form.submit "Pay", id: "checkout-button", class: "submit-button cursor-pointer px-4 py-3 rounded-full bg-indigo-400 hover:bg-indigo-500 text-white focus:ring focus:outline-none w-full text-xl font-semibold transition-colors" %>
+      <%= form.submit "Pay", id: "checkout-button", data: { disable_with: "Loading..." }, class: "submit-button cursor-pointer px-4 py-3 rounded-full bg-indigo-400 hover:bg-indigo-500 text-white focus:ring focus:outline-none w-full text-xl font-semibold transition-colors" %>
     </div>
     <div class="col-span-1 bg-white lg:block hidden">
       <h1 class="py-6 border-b-2 text-xl text-gray-600 px-8">Order Summary</h1>
