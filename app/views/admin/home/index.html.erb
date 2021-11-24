@@ -1,0 +1,40 @@
+<div class="flex w-full">
+  <div class="pl-4 pt-8 w-full">
+    <div class="grid sm:grid-cols-3 lg:grid-cols-3 gap-4">
+      <div class="flex justify-between w-4/5 items-center bg-indigo-500 p-6">
+        <div class="flex rounded-full bg-white border justify-center w-16 h-16">
+          <svg class="w-10 h-10 m-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+        </div>
+        <div class="flex flex-col text-white text-xl">
+          <span><%= @user_count %></span>
+          <span>Users</span>
+        </div>
+      </div>
+      <div class="flex justify-between w-4/5 items-center bg-indigo-500 p-6">
+        <div class="flex rounded-full bg-white border justify-center w-16 h-16">
+          <svg class="w-10 h-10 m-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+        </div>
+        <div class="flex flex-col text-white text-xl">
+          <span><%= @product_count %></span>
+          <span>Products</span>
+        </div>
+      </div>
+      <div class="flex justify-between w-4/5 items-center bg-indigo-500 p-6">
+        <div class="flex rounded-full bg-white border justify-center w-16 h-16">
+          <svg class="w-10 h-10 m-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+          </svg>
+        </div>
+        <div class="flex flex-col text-white text-xl">
+          <span class=""><%= @order_count %></span>
+          <span>Orders</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

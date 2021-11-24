@@ -4,7 +4,10 @@ class HomeController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @products = Product.all
-    @line_item = current_order.line_items.new
+    if current_user.role == "admin"
+      redirect_to admin_root_path
+    else
+      redirect_to products_path
+    end
   end
 end
