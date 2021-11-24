@@ -1,0 +1,65 @@
+<div class="flex flex-col w-full mx-auto px-4 sm:px-6 pt-5">
+  <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+      <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        <table id="admin-checkouts-table" class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              avatar
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Name
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Email
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Role
+            </th>
+            <th scope="col" class="relative px-6 py-3">
+              <span class="sr-only">Edit</span>
+            </th>
+          </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+          <% @users.each_with_index do |user, index| %>
+            <%= form_for [:admin, user], remote: true do |form| %>
+              <%= hidden_field_tag(id: user.id) %>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">
+                    <% if user.image %>
+                      <img src="<%= user.image %>" alt="<%= user.gravatar_url %>" class="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10" />
+                    <% else %>
+                      <%= image_tag user.gravatar_url, class: "mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10" %>
+                    <% end %>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">
+                    <%= form.text_field :name, class: "border p-2 rounded-md", value: user.name %>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">
+                    <%= form.text_field :email, class: "border p-2 rounded-md", value: user.email %>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">
+                    <%= form.select(:role, options_for_select([%w[Admin admin], %w[User user]], selected: user.role), {}, { class: "rounded-md appearance-none text-center p-2 w-40 border cursor-pointer border-gray-300"}) %>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <%= form.submit "Save", method: :patch, class: "text-indigo-600 bg-white cursor-pointer hover:text-indigo-900" %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
