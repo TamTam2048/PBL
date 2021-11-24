@@ -9,7 +9,10 @@ class Checkout < ApplicationRecord
   VALID_EMAIL_REGEX = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
   validates :total, presence: true, numericality: { greater_than: 0 }
+  validates :name, presence: true
   validates :email, presence: true, length: { in: 5..100 }, format: { with: VALID_EMAIL_REGEX }
+  validates :address, presence: true
+  validates :phone_number, presence: true
 
   def to_param
     slug
