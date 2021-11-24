@@ -2,6 +2,14 @@
 
 Rails.application.routes.draw do
   root "home#index"
+
+  namespace :admin do
+    root "home#index"
+    resources :products
+    resources :checkouts
+    resources :orders
+  end
+
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   resources :users
   resources :products do
