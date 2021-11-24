@@ -12,6 +12,9 @@ class User < ApplicationRecord
   has_many :checkouts, dependent: :destroy
   has_many :reviews, dependent: :destroy
 
+  enum role: { admin: 0, user: 1 }
+  validates :role, inclusion: { in: %w[admin user] }
+
   class << self
     def from_omniauth(auth)
       if omniauth_registered_user(auth)

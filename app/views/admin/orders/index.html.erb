@@ -1,0 +1,55 @@
+<div x-data="setup()" class="flex flex-col w-full mx-auto px-4 sm:px-6 pt-5">
+  <div class="flex flex-col sm:flex-row">
+    <a @click="activeTab = 0"
+            class="py-4 px-6 cursor-pointer block hover:text-indigo-500 focus:outline-none font-medium"
+            :class="activeTab===0 ? 'text-indigo-500 border-b-2 border-indigo-500' : 'text-gray-600'">
+      All
+    </a>
+    <a @click="activeTab = 1"
+            class="py-4 px-6 cursor-pointer block hover:text-indigo-500 focus:outline-none font-medium"
+            :class="activeTab===1 ? 'text-indigo-500 border-b-2 border-indigo-500' : 'text-gray-600'">
+      Pending
+    </a>
+    <a @click="activeTab=2"
+            class="py-4 px-6 cursor-pointer block hover:text-indigo-500 focus:outline-none font-medium"
+            :class="activeTab===2 ? 'text-indigo-500 border-b-2 border-indigo-500' : 'text-gray-600'">
+      Processing
+    </a>
+    <a @click="activeTab=3"
+            class="py-4 px-6 cursor-pointer block hover:text-indigo-500 focus:outline-none font-medium"
+            :class="activeTab===3 ? 'text-indigo-500 border-b-2 border-indigo-500' : 'text-gray-600'">
+      Approved
+    </a>
+    <a @click="activeTab=4"
+       class="py-4 px-6 cursor-pointer block hover:text-indigo-500 focus:outline-none font-medium"
+       :class="activeTab===4 ? 'text-indigo-500 border-b-2 border-indigo-500' : 'text-gray-600'">
+      Canceled
+    </a>
+  </div>
+  <div class="py-8 align-middle inline-block min-w-full">
+    <div x-show="activeTab === 0" class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+      <%= render 'admin/orders/order_table', orders: @orders %>
+    </div>
+    <div x-show="activeTab === 1" class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+      <%= render 'admin/orders/order_table', orders: filter_by_status(@orders , 'pending') %>
+    </div>
+    <div x-show="activeTab === 2" class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+      <%= render 'admin/orders/order_table', orders: filter_by_status(@orders , 'processing') %>
+    </div>
+    <div x-show="activeTab === 3" class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+      <%= render 'admin/orders/order_table', orders: filter_by_status(@orders , 'approved') %>
+    </div>
+    <div x-show="activeTab === 4" class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+      <%= render 'admin/orders/order_table', orders: filter_by_status(@orders , 'canceled') %>
+    </div>
+  </div>
+</div>
+
+
+<script>
+    function setup() {
+        return {
+          activeTab: 0,
+        };
+    };
+</script>

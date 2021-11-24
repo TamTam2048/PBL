@@ -1,0 +1,33 @@
+<table class="min-w-full divide-y divide-gray-200">
+  <thead class="bg-gray-50">
+  <tr>
+    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+      Order ID
+    </th>
+    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+      Status
+    </th>
+    <th scope="col" class="relative px-6 py-3">
+      <span class="sr-only">Delete</span>
+    </th>
+  </tr>
+  </thead>
+  <tbody class="bg-white divide-y divide-gray-200">
+  <% orders.each do |order| %>
+    <%= hidden_field_tag(id: order.id) %>
+    <tr>
+      <td class="px-6 py-4 whitespace-nowrap">
+        <%= order.checkout.slug %>
+      </td>
+      <%= form_for [:admin, order], remote: true do |form| %>
+        <td class="px-6 py-4 whitespace-nowrap">
+          <%= form.select(:status, options_for_select([%w[Pending pending], %w[Processing processing], %w[Approved approved], %w[Canceled canceled]], selected: order.status), {}, { class: "rounded-md appearance-none text-center p-2 w-40 border cursor-pointer border-gray-300"}) %>
+        </td>
+        <td class="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
+          <%= form.submit "Save", method: :patch, class: "text-red-600 bg-white cursor-pointer" %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
