@@ -2,7 +2,6 @@
 
 module Admin
   class OrdersController < ApplicationController
-
     def index
       @orders = Order.where.not(checkout_id: nil)
     end

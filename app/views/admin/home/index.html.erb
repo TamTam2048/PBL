@@ -1,7 +1,8 @@
-<div class="flex w-full">
-  <div class="pl-4 pt-8 w-full">
+<div class="flex flex-col w-full">
+  <!-- cards -->
+  <div class="px-6 pt-8 w-full">
     <div class="grid sm:grid-cols-3 lg:grid-cols-3 gap-4">
-      <div class="flex justify-between w-4/5 items-center bg-indigo-500 p-6">
+      <div class="flex m-auto justify-between w-full items-center bg-indigo-500 p-6">
         <div class="flex rounded-full bg-white border justify-center w-16 h-16">
           <svg class="w-10 h-10 m-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -12,7 +13,7 @@
           <span>Users</span>
         </div>
       </div>
-      <div class="flex justify-between w-4/5 items-center bg-indigo-500 p-6">
+      <div class="flex m-auto justify-between w-full items-center bg-indigo-500 p-6">
         <div class="flex rounded-full bg-white border justify-center w-16 h-16">
           <svg class="w-10 h-10 m-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -23,7 +24,7 @@
           <span>Products</span>
         </div>
       </div>
-      <div class="flex justify-between w-4/5 items-center bg-indigo-500 p-6">
+      <div class="flex m-auto justify-between w-full items-center bg-indigo-500 p-6">
         <div class="flex rounded-full bg-white border justify-center w-16 h-16">
           <svg class="w-10 h-10 m-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
@@ -33,6 +34,141 @@
           <span class=""><%= @order_count %></span>
           <span>Orders</span>
         </div>
+      </div>
+    </div>
+  </div>
+  <!-- Transactions -->
+  <div class="w-full grid grid-cols-1 xl:grid-cols-2 xl:gap-8 my-4 pt-8 px-6">
+    <div class="bg-white shadow rounded-lg px-4 sm:pt-6 sm:pb-2 h-full">
+      <div class="flex-shrink-0 mb-4">
+        <h3 class="text-base font-normal text-gray-500">Total</h3>
+        <span class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
+          <%= number_to_currency(@total) %>
+        </span>
+      </div>
+      <%= area_chart Checkout.group_by_day(:created_at).sum(:total) %>
+    </div>
+    <div class="bg-white shadow rounded-lg px-4 sm:pt-6 sm:pb-2 h-full">
+      <div class="mb-4 flex items-center justify-between">
+        <div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Latest Transactions</h3>
+        </div>
+        <div class="flex-shrink-0">
+          <%= link_to "View all", admin_orders_path, class: "text-sm font-medium text-cyan-600 hover:bg-indigo-100 rounded-lg p-2" %>
+        </div>
+      </div>
+      <div class="flex flex-col mt-8">
+        <div class="overflow-x-auto rounded-lg">
+          <div class="align-middle inline-block min-w-full">
+            <div class="shadow overflow-hidden sm:rounded-lg">
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-100">
+                <tr>
+                  <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Transaction
+                  </th>
+                  <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Created Date
+                  </th>
+                  <th scope="col" class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Amount
+                  </th>
+                </tr>
+                </thead>
+                <tbody class="bg-white">
+                  <% @checkouts.each_with_index do |checkout, index| %>
+                    <tr class="<%= (index % 2 != 0) ? 'bg-gray-50' : '' %>">
+                      <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                        Payment from <span class="font-semibold"><%= checkout.user.name %></span>
+                      </td>
+                      <td class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                        <%= checkout.created_at.strftime("%B %d, %Y") %>
+                      </td>
+                      <td class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                        <%= number_to_currency(checkout.total) %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Users and Products -->
+  <div class="w-full grid grid-cols-1 xl:grid-cols-2 gap-8 py-8 px-6">
+    <!-- Users -->
+    <div class="bg-white shadow rounded-lg mb-4 sm:pt-6 sm:pb-2 h-full">
+      <div class="flex items-center justify-between mb-4 px-4 sm:px-6">
+        <h3 class="text-xl font-bold leading-none text-gray-900">Latest Users</h3>
+        <%= link_to "View all", admin_users_path, class: "text-sm font-medium text-cyan-600 hover:bg-indigo-100 rounded-lg inline-flex items-center p-2" %>
+      </div>
+      <div class="flow-root">
+        <ul role="list" class="divide-y divide-gray-200">
+          <% @users.each_with_index do |user, index| %>
+            <li class="cursor-pointer hover:bg-indigo-50 px-4 sm:px-6 <%= index != @users.size - 1 ? 'py-3 sm:py-4' : 'pt-3 sm:pt-4'  %>" >
+              <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0">
+                  <% if user.image %>
+                    <img src="<%= user.image %>" alt="<%= user.gravatar_url %>" class="rounded-full w-10 h-10" />
+                  <% else %>
+                    <%= image_tag user.gravatar_url, class: "rounded-full w-10 h-10" %>
+                  <% end %>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-gray-900 truncate">
+                    <%= user.name %>
+                  </p>
+                  <p class="text-sm text-gray-500 truncate">
+                    <%= user.email %>
+                  </p>
+                </div>
+                <div class="inline-flex items-center text-sm font-semibold text-gray-900">
+                  <%= user.created_at.strftime("%B %d, %Y") %>
+                </div>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <!-- Products -->
+    <div class="bg-white shadow rounded-lg mb-4 pt-4 sm:pt-6 sm:pb-2 h-full">
+      <div class="flex items-center justify-between mb-4 px-4 sm:px-6">
+        <h3 class="text-xl font-bold leading-none text-gray-900">Latest Products</h3>
+        <%= link_to "View all", admin_products_path, class: "text-sm font-medium text-cyan-600 hover:bg-indigo-100 rounded-lg inline-flex items-center p-2" %>
+      </div>
+      <div class="flow-root">
+        <ul role="list" class="divide-y divide-gray-200">
+          <% @products.each_with_index do |product, index| %>
+            <li class="cursor-pointer hover:bg-indigo-50 px-4 sm:px-6 <%= index != @users.size - 1 ? 'py-3 sm:py-4' : 'pt-3 sm:pt-4'  %>" >
+              <%= link_to edit_admin_product_path(product) do %>
+                <div class="flex items-center space-x-4">
+                <div class="flex-shrink-0">
+                  <% if product.image.attached? %>
+                    <img src="<%= product.image %>" alt="product" class="w-10 h-10" />
+                  <% else %>
+                    <img class="w-10 h-10" src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80" alt="">
+                  <% end %>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-gray-900 truncate">
+                    <%= product.name %>
+                  </p>
+                  <p class="text-sm text-gray-500 truncate">
+                    <%= number_to_currency(product.price) %>
+                  </p>
+                </div>
+                <div class="inline-flex items-center text-sm font-semibold text-gray-900">
+                  <%= product.created_at.strftime("%B %d, %Y") %>
+                </div>
+              </div>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
       </div>
     </div>
   </div>

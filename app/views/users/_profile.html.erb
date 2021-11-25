@@ -1,0 +1,42 @@
+<div class="w-full">
+  <div class="flex bg-white p-4 rounded-xl w-full">
+    <div class="md:col-span-1 shadow-md w-1/6">
+      <div class="flex w-full h-full relative">
+        <% if @user.image %>
+          <img src="<%= @user.image %>" alt="<%= @user.gravatar_url %>" class="w-40 h-40 rounded-full m-auto" />
+        <% else %>
+          <%= image_tag @user.gravatar_url, class: "w-40 h-40 rounded-full m-auto" %>
+      <% end %>
+      </div>
+    </div>
+    <div class="shadow-md space-y-2 w-5/6">
+      <%= form_for @user do |form| %>
+        <div class="flex w-full p-2">
+          <span class="text-sm font-bold uppercase rounded-l px-4 py-2 w-1/6">Name:</span>
+          <%= form.text_field :name,
+                              class: "px-4 border border-2 border-gray-300 rounded-md w-4/6",
+                              value: @user.name,
+                              readonly: (current_user.id == @user.id || current_user.role == 'admin') ? false : true %>
+        </div>
+        <div class="flex w-full p-2">
+          <span class="text-sm font-bold uppercase rounded-l px-4 py-2 whitespace-no-wrap w-1/6">Email:</span>
+          <%= form.text_field :email,
+                              class: "px-4 border border-2 border-gray-300 rounded-md w-4/6",
+                              value: @user.email,
+                              readonly: (current_user.id == @user.id || current_user.role == 'admin') ? false : true %>
+        </div>
+        <div class="flex w-full p-2 items-center">
+          <span class="text-sm font-bold uppercase rounded-l px-4 whitespace-no-wrap w-1/6">Role:</span>
+          <span class="px-4 cursor-default border-gray-300 focus:outline-none rounded-md w-4/6">
+            <%= @user.role %>
+          </span>
+        </div>
+        <% if current_user.id == @user.id || current_user.role == 'admin' %>
+          <div class="w-full flex justify-end py-2 px-8">
+            <%= form.submit "Save change", class: "p-2 cursor-pointer bg-indigo-500 text-white" %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -10,6 +10,8 @@ class Product < ApplicationRecord
   validates :price, presence: true, numericality: { greater_than: 0 }
   validates :rating, presence: true, numericality: { greater_than: 0, less_than_or_equal_to: 5 }
 
+  paginates_per 10
+
   def blank_stars
     5 - rating.to_i
   end

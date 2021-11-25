@@ -5,7 +5,7 @@ module Admin
     before_action :set_product, only: %i[edit update destroy]
 
     def index
-      @products = Product.all.with_attached_image
+      @products = Product.with_attached_image.page params[:page]
     end
 
     def edit; end

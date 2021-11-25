@@ -5,7 +5,7 @@ module Admin
     before_action :set_user, only: %i[edit update]
 
     def index
-      @users = User.all
+      @users = User.page params[:page]
     end
 
     def edit; end
