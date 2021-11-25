@@ -4,7 +4,6 @@ class ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
   before_action :valid_user,  only: %i[edit update destroy]
 
-
   def index
     @products = Product.all
     @line_item = current_order.line_items.new

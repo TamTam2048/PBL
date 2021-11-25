@@ -30,9 +30,9 @@
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="text-sm text-gray-900">
                     <% if user.image %>
-                      <img src="<%= user.image %>" alt="<%= user.gravatar_url %>" class="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10" />
+                      <img src="<%= user.image %>" alt="<%= user.gravatar_url %>" class="m-auto rounded-full w-10 h-10" />
                     <% else %>
-                      <%= image_tag user.gravatar_url, class: "mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10" %>
+                      <%= image_tag user.gravatar_url, class: "m-auto rounded-full w-8 h-8 sm:w-10 sm:h-10" %>
                     <% end %>
                   </div>
                 </td>
@@ -43,7 +43,7 @@
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <div class="text-sm text-gray-900">
-                    <%= form.text_field :email, class: "border p-2 rounded-md", value: user.email %>
+                    <%= form.text_field :email, class: "border p-2 w-4/5 rounded-md", value: user.email %>
                   </div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap">
@@ -62,4 +62,5 @@
       </div>
     </div>
   </div>
+  <%= paginate @users %>
 </div>
