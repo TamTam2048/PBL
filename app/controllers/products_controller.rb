@@ -11,6 +11,7 @@ class ProductsController < ApplicationController
 
   def show
     @line_item = current_order.line_items.new
+    @review = Review.new
   end
 
   def new

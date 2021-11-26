@@ -13,4 +13,9 @@ class Product < ApplicationRecord
   def blank_stars
     5 - rating.to_i
   end
+
+  def update_product_rating
+    rating = reviews.sum(:rating) / reviews.size
+    update(rating_count: reviews.size, rating: rating)
+  end
 end

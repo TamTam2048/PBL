@@ -1,0 +1,37 @@
+<% @product.reviews.each_with_index do |review, index| %>
+  <div class="flex pb-8">
+    <div class="flex-shrink-0 mr-3">
+      <% if review.user.image %>
+        <img src="<%= review.user.image %>" alt="<%= review.user.gravatar_url %>" class="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10" />
+      <% else %>
+        <%= image_tag review.user.gravatar_url, class: "mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10" %>
+      <% end %>
+    </div>
+    <div class="flex-1 border border-gray-400 rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+      <div class="mb-px">
+        <strong class="mr-2"><%= review.user.name %></strong><span class="text-xs text-gray-400"><%= time_since(review.updated_at) %></span>
+      </div>
+      <div id="comment-rating-<%= index %>" class="flex flex-row h-4 w-4 mb-2"></div>
+      <p class="text-sm">
+        <%= review.content %>
+      </p>
+      <% if current_user.id == review.user_id %>
+        <div class="flex-1 pt-2">
+          <%= link_to "Edit", edit_product_review_path(@product, review), class: "text-sm font-medium text-indigo-700 border-r-2 border-gray-400 pr-1" %>
+          <%= link_to "Delete", product_review_path(@product, review), method: :delete, remote: true, class: "text-sm font-medium text-red-700" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <script>
+      $('#comment-rating-<%= index %>').raty({
+          size     : 10,
+          starOff: '<%= image_path "star-off.svg" %>',
+          starOn : '<%= image_path "star-on.svg" %>',
+          half: false,
+          readOnly: true,
+          score: <%= review.rating %>,
+      });
+      $('#comment-rating-<%= index %>').raty.reload();
+  </script>
+<% end %>

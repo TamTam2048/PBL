@@ -9,6 +9,7 @@ gem "bootsnap", ">= 1.4.4", require: false
 gem "devise", "~> 4.8"
 gem "dotenv-rails"
 gem "faker", "~> 2.19"
+gem "gravtastic", "~> 3.2", ">= 3.2.6"
 gem "jbuilder", "~> 2.7"
 gem "mysql2", "~> 0.5.3"
 gem "omniauth", "~> 2.0", ">= 2.0.4"
