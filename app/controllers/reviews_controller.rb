@@ -23,7 +23,7 @@ class ReviewsController < ApplicationController
       flash[:success] = "Your comment has been updated"
     else
       redirect_to edit_product_review_path(@product.id, @review.id)
-      flash[:danger] = "An error occured. Please try again"
+      flash[:danger] = "An error occurred. Please try again"
     end
   end
 
