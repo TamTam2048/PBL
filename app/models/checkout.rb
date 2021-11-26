@@ -35,13 +35,13 @@ class Checkout < ApplicationRecord
     errors.add(:checkout, e.message)
   end
 
-  private
-
   def trim(num)
     i = num.to_i
     f = num.to_f
     i == f ? i : f
   end
+
+  private
 
   def set_slug
     loop do

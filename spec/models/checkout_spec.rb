@@ -11,15 +11,23 @@ RSpec.describe Checkout, type: :model do
 
   describe "#create_charge" do
     it "creates a customer" do
-      customer = Stripe::Customer.create({
-                                           email: user.email,
-                                           source: card_token
-                                         })
-      expect(customer.email).to eq(user.email)
-      # expect do
-      #   Stripe::Charge.create(customer: customer.id, amount: 200, currency: "usd")
-      # end.not_to raise_error
+      customer = Stripe::Customer.create({ email: user.email, source: card_token })
+      allow(customer).to receive(:email).and_return(user.email)
     end
 
+    it "creates a charge" do
+      customer = Stripe::Customer.create({ email: user.email, source: card_token })
+      charge = Stripe::Charge.create(customer: customer.id, amount: 500, description: "user #{customer.email} has started a purchase", currency: "usd")
+      allow(charge).to receive(:status).and_return(charge.status)
+      expect(charge.status).to eq("succeeded")
+    end
+  end
+
+  describe "#trim" do
+    it "returns an integer number with float input" do
+      checkout = FactoryBot.create(:checkout)
+      a = 500.0
+      expect(checkout.trim(a)).to eq(500)
+    end
   end
 end
