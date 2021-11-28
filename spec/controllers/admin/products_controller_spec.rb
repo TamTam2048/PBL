@@ -3,11 +3,13 @@
 require "rails_helper"
 
 RSpec.describe Admin::ProductsController, type: :controller do
-
   admin_login
 
   let(:user) { FactoryBot.create(:user) }
-  let(:product) { FactoryBot.create(:product, user: user) }
+  let!(:product) { FactoryBot.create(:product, user: user) }
+  let(:valid_attr) do
+    { name: "guitar", description: "a good-looking guitar", price: 500.5, rating: 2.7 }
+  end
 
   describe "GET #index" do
     it "returns a success response" do
@@ -25,9 +27,32 @@ RSpec.describe Admin::ProductsController, type: :controller do
 
   describe "PATCH #update" do
     describe "with valid attributes" do
-      it "updates product" do
-        patch :update, params: { product: FactoryBot.attributes_for(:product), id: product.id }
-        expect(response).to redirect_to admin_products_path
+      it "updates product with valid name" do
+        expect do
+          patch :update, params: { product: valid_attr, id: product.id }
+          product.reload
+        end.to change(product, :name).to(valid_attr[:name])
+      end
+
+      it "updates product with valid description" do
+        expect do
+          patch :update, params: { product: valid_attr, id: product.id }
+          product.reload
+        end.to change(product, :description).to(valid_attr[:description])
+      end
+
+      it "updates product with valid price" do
+        expect do
+          patch :update, params: { product: valid_attr, id: product.id }
+          product.reload
+        end.to change(product, :price).to(valid_attr[:price])
+      end
+
+      it "updates product with valid rating" do
+        expect do
+          patch :update, params: { product: valid_attr, id: product.id }
+          product.reload
+        end.to change(product, :rating).to(valid_attr[:rating])
       end
     end
 
@@ -53,7 +78,7 @@ RSpec.describe Admin::ProductsController, type: :controller do
     it "deletes product" do
       expect do
         delete :destroy, params: { id: product.id }
-      end.to change(Product, :count).by(1)
+      end.to change(Product, :count).by(-1)
     end
   end
 end

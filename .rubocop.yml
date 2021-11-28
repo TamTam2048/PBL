@@ -27,6 +27,7 @@ Layout/LineLength:
     - config/**/*
 
 Metrics/BlockLength:
+  IgnoredMethods: [ 'describe', 'context' ]
   Exclude:
     - config/**/*
     - spec/**/*
