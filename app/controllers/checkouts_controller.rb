@@ -29,8 +29,7 @@ class CheckoutsController < ApplicationController
     @checkout.user_id = current_user.id if current_user
     update_total
     if @checkout.save
-      finalize_current_order
-      finalize_checkout
+      transaction
     else
       redirect_to new_checkout_path(order_id: @order.id)
       flash[:danger] = "An error occurred. Please try again"
@@ -46,6 +45,11 @@ class CheckoutsController < ApplicationController
 
   def update_total
     @checkout.total = @order.line_items.sum { |line_item| line_item.product.price * line_item.quantity }
+  end
+
+  def transaction
+    finalize_current_order
+    finalize_checkout
   end
 
   def finalize_current_order
