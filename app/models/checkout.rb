@@ -18,6 +18,29 @@ class Checkout < ApplicationRecord
     slug
   end
 
+  def create_charge(token)
+    @amount = total * 100.0
+    customer = Stripe::Customer.create(
+      email: email,
+      source: token
+    )
+
+    Stripe::Charge.create(
+      customer: customer.id,
+      amount: trim(@amount),
+      description: "user #{email} has started a purchase",
+      currency: "usd"
+    )
+  rescue Stripe::CardError => e
+    errors.add(:checkout, e.message)
+  end
+
+  def trim(num)
+    i = num.to_i
+    f = num.to_f
+    i == f ? i : f
+  end
+
   private
 
   def set_slug
