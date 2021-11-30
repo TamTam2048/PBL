@@ -7,5 +7,9 @@ build:
     BUNDLE_INSTALL_ARGS: --jobs 10 --retry=3
     RAILS_ENV: production
     INSTALL_DEPENDENCIES: curl openssh-server python yarn
+release:
+  command:
+    - rails db:migrate
+  image: web
 run:
-  web: bundle exec rails s -p 3000 -b '0.0.0.0'
+  web: bundle exec puma -C config/puma.rb
