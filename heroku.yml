@@ -4,6 +4,7 @@ build:
   docker:
     web: Dockerfile
   config:
+    BUNDLE_INSTALL_ARGS: --jobs 10 --retry=3
     RAILS_ENV: production
     INSTALL_DEPENDENCIES: curl openssh-server python yarn
 run:
