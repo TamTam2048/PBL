@@ -16,7 +16,6 @@ COPY Gemfile.lock /myapp/Gemfile.lock
 
 RUN bundle install
 RUN yarn install
-RUN RAILS_ENV=production bundle exec rake assets:precompile
 
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/
@@ -27,3 +26,6 @@ EXPOSE 3000
 
 # Configure the main process to run when running the image
 #CMD ["rails", "server", "-b", "0.0.0.0"]
+# Compile assets
+ARG RAILS_ENV=development
+RUN if [ "$RAILS_ENV" = "production" ]; then SECRET_KEY_BASE=$(rake secret) bundle exec rake assets:precompile; fi
