@@ -1,3 +1,10 @@
+
+
 build:
   docker:
     web: Dockerfile
+  config:
+    RAILS_ENV: production
+    INSTALL_DEPENDENCIES: curl openssh-server python yarn
+run:
+  web: bundle exec puma -C config/puma.rb
