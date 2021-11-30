@@ -8,4 +8,4 @@ build:
     RAILS_ENV: production
     INSTALL_DEPENDENCIES: curl openssh-server python yarn
 run:
-  web: bundle exec puma -C config/puma.rb
+  web: bundle exec rails s -p 3000 -b '0.0.0.0'
