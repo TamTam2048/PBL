@@ -48,14 +48,16 @@ class CheckoutsController < ApplicationController
   end
 
   def transaction
-    finalize_current_order
-    finalize_checkout
+    ActiveRecord::Base.transaction do
+      finalize_current_order
+      finalize_checkout
+    end
   end
 
   def finalize_current_order
-    @order.update(checkout_id: @checkout.id)
+    @order.update!(checkout_id: @checkout.id)
     @order.line_items.each do |line_item|
-      line_item.update(unit_price: line_item.product.price, total_price: line_item.product.price * line_item.quantity)
+      line_item.update!(unit_price: line_item.product.price, total_price: line_item.product.price * line_item.quantity)
     end
     generate_new_order
   end
@@ -63,7 +65,7 @@ class CheckoutsController < ApplicationController
   def generate_new_order
     session.delete(:order_id)
     order = current_user ? current_user.orders.build : Order.new
-    order.save
+    order.save!
   end
 
   def finalize_checkout
