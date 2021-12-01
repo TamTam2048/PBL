@@ -26,6 +26,9 @@ RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
+ENV RAILS_ENV=production
+RUN bundle exec rake assets:precompile
+
 # Configure the main process to run when running the image
 #CMD ["rails", "server", "-b", "0.0.0.0"]
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
