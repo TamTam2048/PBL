@@ -36,7 +36,7 @@ class ProductsController < ApplicationController
     @product.update(product_params)
     if @product.save
       redirect_to user_path(current_user)
-      flash[:success] = "Updated product successfully"
+      flash[:success] = "Updated user successfully"
     else
       redirect_to edit_product_path(@product)
       flash[:danger] = "An error occurred. Please try again"

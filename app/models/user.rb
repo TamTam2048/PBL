@@ -7,10 +7,15 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: %i[google_oauth2 facebook]
 
+  paginates_per 10
+
   has_many :products, dependent: :destroy
   has_many :orders, dependent: :destroy
   has_many :checkouts, dependent: :destroy
   has_many :reviews, dependent: :destroy
+
+  enum role: { admin: 0, user: 1 }
+  validates :role, inclusion: { in: %w[admin user] }
 
   class << self
     def from_omniauth(auth)
