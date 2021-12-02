@@ -9,7 +9,7 @@ const initializeStripe = () => {
         return;
     }
 
-    var stripe = Stripe(`${process.env.STRIPE_PUBLISHABLE_KEY}`);
+    var stripe = Stripe(`pk_test_ASGb5qcqYXV8iLWOHY8SAIWI00WP53HNdd`);
 
     var elements = stripe.elements({
         fonts: [
