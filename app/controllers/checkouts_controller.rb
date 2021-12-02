@@ -29,8 +29,7 @@ class CheckoutsController < ApplicationController
     @checkout.user_id = current_user.id if current_user
     update_total
     if @checkout.save
-      finalize_order
-      finalize_checkout
+      transaction
     else
       redirect_to new_checkout_path(order_id: @order.id)
       flash[:danger] = "An error occurred. Please try again"
@@ -48,20 +47,36 @@ class CheckoutsController < ApplicationController
     @checkout.total = @order.line_items.sum { |line_item| line_item.product.price * line_item.quantity }
   end
 
-  def finalize_order
-    @order.update(checkout_id: @checkout.id)
-    @order.line_items.each do |line_item|
-      line_item.update(unit_price: line_item.product.price, total_price: line_item.product.price * line_item.quantity)
+  def transaction
+    ActiveRecord::Base.transaction do
+      finalize_current_order
+      finalize_checkout
     end
   end
 
-  def finalize_checkout
+  def finalize_current_order
+    @order.update!(checkout_id: @checkout.id)
+    @order.line_items.each do |line_item|
+      line_item.update!(unit_price: line_item.product.price, total_price: line_item.product.price * line_item.quantity)
+    end
+    generate_new_order
+  end
+
+  def generate_new_order
     session.delete(:order_id)
-    session[:checkout_id] = @checkout.id
     order = current_user ? current_user.orders.build : Order.new
-    order.save
-    redirect_to @checkout
-    flash.now[:success] = "Your order has been created successfully"
+    order.save!
+  end
+
+  def finalize_checkout
+    session[:checkout_id] = @checkout.id
+
+    if @checkout.create_charge(params[:stripeToken])
+      redirect_to @checkout
+      flash[:success] = "Your order has been created successfully"
+    else
+      redirect_to "new"
+    end
   end
 
   def set_checkout
