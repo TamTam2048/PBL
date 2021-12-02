@@ -2,13 +2,11 @@
 
 module Admin
   class UsersController < ApplicationController
-    before_action :set_user, only: %i[edit update]
+    before_action :set_user, only: %i[update]
 
     def index
       @users = User.page params[:page]
     end
-
-    def edit; end
 
     def update
       @user.update(user_params)
