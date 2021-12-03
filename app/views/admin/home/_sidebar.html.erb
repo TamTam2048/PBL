@@ -1,0 +1,46 @@
+<nav class="hidden md:block flex flex-col bg-indigo-700 w-60 min-h-screen text-gray-900 border transition-all border-indigo-900">
+  <div class="my-4">
+    <ul class="mx-2">
+      <%= link_to admin_root_url, method: :get do %>
+        <li class="mb-2 px-4 py-4 text-gray-100 flex flex-row items-center border-gray-300 hover:text-black hover:bg-white hover:font-bold rounded rounded-lg">
+        <span class="flex items-center">
+          <svg class="fill-current h-5 w-5" viewBox="0 0 24 24">
+            <path d="M16 20h4v-4h-4m0-2h4v-4h-4m-6-2h4V4h-4m6 4h4V4h-4m-6 10h4v-4h-4m-6 4h4v-4H4m0 10h4v-4H4m6 4h4v-4h-4M4 8h4V4H4v4z"></path>
+          </svg>
+          <span class="ml-2">Dashboard</span>
+        </span>
+        </li>
+      <% end %>
+      <%= link_to admin_orders_path, method: :get do %>
+        <li class="mb-2 px-4 py-4 text-gray-100 flex flex-row items-center border-gray-300 hover:text-black hover:bg-white hover:font-bold rounded rounded-lg">
+          <span class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="fill-current h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+            </svg>
+            <span class="ml-2">Order</span>
+          </span>
+        </li>
+      <% end %>
+      <%= link_to admin_products_path, method: :get do %>
+        <li class="mb-2 px-4 py-4 text-gray-100 flex flex-row items-center border-gray-300 hover:text-black hover:bg-white hover:font-bold rounded rounded-lg">
+          <span class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+            </svg>
+            <span class="ml-2">Product</span>
+          </span>
+        </li>
+      <% end %>
+      <%= link_to admin_users_path, method: :get do %>
+        <li class="mb-2 px-4 py-4 text-gray-100 flex flex-row items-center border-gray-300 hover:text-black hover:bg-white hover:font-bold rounded rounded-lg">
+          <span class="flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <span class="ml-2">Manage user</span>
+          </span>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>

@@ -15,8 +15,17 @@
 
   <body>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-    <%= render 'layouts/header' %>
-    <%= render 'shared/toastr' %>
-    <%= yield %>
+    <% if current_user && current_user.role == "admin" %>
+      <%= render "layouts/admin_header" %>
+      <div class="flex">
+        <%= render "admin/home/sidebar" %>
+        <%= yield %>
+      </div>
+    <% else %>
+      <%= render "layouts/header" %>
+      <%= yield %>
+    <% end %>
+    <%= render "shared/toastr" %>
+
   </body>
 </html>
